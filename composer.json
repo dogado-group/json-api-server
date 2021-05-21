@@ -13,7 +13,7 @@
     "ext-json": "*",
     "dogado/json-api-common": "^1.0",
     "symfony/validator": "^5.1",
-    "doctrine/annotations": "^1.10",
+    "doctrine/annotations": "^1.11",
     "doctrine/cache": "^1.10"
   },
   "require-dev": {
