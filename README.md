@@ -1,5 +1,12 @@
 # Abstract server side php implementation of the JSON:API protocol.
 
+[![phpunit](https://github.com/dogado-group/json-api-server/actions/workflows/phpunit.yml/badge.svg)](https://github.com/dogado-group/json-api-server/actions/workflows/phpunit.yml)
+[![Coverage Status](https://coveralls.io/repos/github/dogado-group/json-api-server/badge.svg?branch=main)](https://coveralls.io/github/dogado-group/json-api-server?branch=main)
+[![Total Downloads](https://poser.pugx.org/dogado/json-api-server/downloads)](https://packagist.org/packages/dogado/json-api-server)
+[![Latest Stable Version](https://poser.pugx.org/dogado/json-api-server/v/stable)](https://packagist.org/packages/dogado/json-api-server)
+[![Latest Unstable Version](https://poser.pugx.org/dogado/json-api-server/v/unstable.png)](https://packagist.org/packages/dogado/json-api-server)
+[![License](https://poser.pugx.org/dogado/json-api-server/license)](https://packagist.org/packages/dogado/json-api-server)
+
 ## Installation
 
 ```sh
