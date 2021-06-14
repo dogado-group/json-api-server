@@ -6,4 +6,4 @@ You should catch all exceptions and transform them via `JsonApiServer::handleExc
 
 *****
 
-[prev: Request handler](03-request-validator.md) | [back to README](../README.md) | [next: Validator for data models](05-validator-for-data-models.md)
+[prev: Request validator](03-request-validator.md) | [back to README](../README.md) | [next: Validator for data models](05-validator-for-data-models.md)

@@ -44,4 +44,4 @@ The traits implement the methods of `RequestHandlerInterface` with throwing a `N
 
 *****
 
-[prev: JSON API Server](01-json-api-server.md) | [back to README](../README.md) | [next: Exception handling](03-exception-handling.md)
+[prev: JSON API Server](01-json-api-server.md) | [back to README](../README.md) | [next: Request validator](03-request-validator.md)
