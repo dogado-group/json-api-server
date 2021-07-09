@@ -27,18 +27,18 @@ class ResponseDecoratorTest extends TestCase
      */
     public function testIncludeRelationship(): void
     {
-        $relatedResource = new Resource($this->faker()->slug, (string) $this->faker()->numberBetween(), [
-            'name' => $this->faker()->domainName,
+        $relatedResource = new Resource($this->faker()->slug(), (string) $this->faker()->numberBetween(), [
+            'name' => $this->faker()->domainName(),
         ]);
-        $relationship = new Relationship($this->faker->slug, $relatedResource);
+        $relationship = new Relationship($this->faker->slug(), $relatedResource);
 
-        $resource = new Resource($this->faker()->slug, (string) $this->faker->numberBetween());
+        $resource = new Resource($this->faker()->slug(), (string) $this->faker->numberBetween());
         $resource->relationships()->set($relationship);
         $document = new Document($resource);
 
         $uri = sprintf(
             'http://%s/%s/%s/relationships/%s?include=%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $resource->type(),
             $resource->id(),
             $relationship->name(),
@@ -60,16 +60,16 @@ class ResponseDecoratorTest extends TestCase
      */
     public function testCleanupAttributes(): void
     {
-        $resource = new Resource($this->faker()->slug, (string) $this->faker->numberBetween(), [
-            'name' => $this->faker()->domainName,
+        $resource = new Resource($this->faker()->slug(), (string) $this->faker->numberBetween(), [
+            'name' => $this->faker()->domainName(),
         ]);
-        $relationship = new Relationship($this->faker->slug);
+        $relationship = new Relationship($this->faker->slug());
         $resource->relationships()->set($relationship);
         $document = new Document($resource);
 
         $uri = sprintf(
             'http://%s/%s/%s?fields[%s]=test&include=foobar',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $resource->type(),
             $resource->id(),
             $resource->type()
@@ -87,19 +87,19 @@ class ResponseDecoratorTest extends TestCase
      */
     public function testCleanupRelationships(): void
     {
-        $relatedResource = new Resource($this->faker()->slug, (string) $this->faker()->numberBetween(), [
-            'name' => $this->faker()->domainName,
+        $relatedResource = new Resource($this->faker()->slug(), (string) $this->faker()->numberBetween(), [
+            'name' => $this->faker()->domainName(),
         ]);
-        $relatedResource->relationships()->set(new Relationship($this->faker->slug));
-        $relationship = new Relationship($this->faker->slug, $relatedResource);
+        $relatedResource->relationships()->set(new Relationship($this->faker->slug()));
+        $relationship = new Relationship($this->faker->slug(), $relatedResource);
 
-        $resource = new Resource($this->faker()->slug, (string) $this->faker->numberBetween());
+        $resource = new Resource($this->faker()->slug(), (string) $this->faker->numberBetween());
         $resource->relationships()->set($relationship);
         $document = new Document($resource);
 
         $uri = sprintf(
             'http://%s/%s/%s/relationships/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $resource->type(),
             $resource->id(),
             $relationship->name()

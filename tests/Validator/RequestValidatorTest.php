@@ -53,7 +53,7 @@ class RequestValidatorTest extends TestCase
     public function testAssertDataNotEmpty(): void
     {
         $this->requestValidator->assertDataNotEmpty($this->createRequest(new Document([new Resource(
-            $this->faker()->slug
+            $this->faker()->slug()
         )])));
         $this->assertTrue(true);
     }
@@ -68,7 +68,7 @@ class RequestValidatorTest extends TestCase
 
     public function testAssertResourcesMatchType(): void
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $request = $this->createRequest(new Document([new Resource(
             $type
         )]));
@@ -78,9 +78,9 @@ class RequestValidatorTest extends TestCase
 
     public function testAssertResourcesMatchTypeThrowsException(): void
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $resource = new Resource(
-            $this->faker()->slug
+            $this->faker()->slug()
         );
         $request = $this->createRequest(new Document([$resource]));
         $this->expectExceptionObject(RequestValidationException::typeMismatch($request, $type, $resource->type(), 0));
@@ -89,7 +89,7 @@ class RequestValidatorTest extends TestCase
 
     public function testAssertResourcesMatchTypeAndContainIds(): void
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $request = $this->createRequest(new Document([new Resource(
             $type,
             (string) $this->faker()->numberBetween()
@@ -100,8 +100,8 @@ class RequestValidatorTest extends TestCase
 
     public function testAssertResourcesMatchTypeAndContainIdsThrowsExceptionDueToType(): void
     {
-        $expectedType = $this->faker()->slug;
-        $actualType = $this->faker()->slug;
+        $expectedType = $this->faker()->slug();
+        $actualType = $this->faker()->slug();
         $request = $this->createRequest(new Document([new Resource(
             $actualType,
             (string) $this->faker()->numberBetween()
@@ -114,7 +114,7 @@ class RequestValidatorTest extends TestCase
 
     public function testAssertResourcesMatchTypeAndContainIdsThrowsExceptionDueToId(): void
     {
-        $expectedType = $this->faker()->slug;
+        $expectedType = $this->faker()->slug();
         $request = $this->createRequest(new Document([new Resource(
             $expectedType
         )]));
@@ -126,7 +126,7 @@ class RequestValidatorTest extends TestCase
 
     public function testAssertScalarResultWithId(): void
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $request = $this->createRequest(new Document([new Resource(
             $type,
             (string) $this->faker()->numberBetween()
@@ -137,7 +137,7 @@ class RequestValidatorTest extends TestCase
 
     public function testAssertScalarResultWithIdThrowsException(): void
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $request = $this->createRequest(new Document([
             new Resource($type, (string) $this->faker()->numberBetween()),
             new Resource($type, (string) $this->faker()->numberBetween()),
@@ -151,7 +151,7 @@ class RequestValidatorTest extends TestCase
 
     public function testAssertScalarResultWithoutId(): void
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $request = $this->createRequest(new Document([new Resource(
             $type
         )]));
@@ -161,7 +161,7 @@ class RequestValidatorTest extends TestCase
 
     public function testAssertScalarResultWithoutIdThrowsException(): void
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $request = $this->createRequest(new Document([
              new Resource($type, (string) $this->faker()->numberBetween()),
          ]));

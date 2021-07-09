@@ -68,84 +68,84 @@ class JsonApiServerTest extends TestCase
 
     public function handlerAssociationScenarios(): Generator
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s/%s/relationships/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type,
             $this->faker()->numberBetween(),
-            $this->faker()->slug
+            $this->faker()->slug()
         );
         yield ['GET', $type, $uri, 'fetchRelationship'];
 
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type,
             $this->faker()->numberBetween()
         );
         yield ['GET', $type, $uri, 'fetchResource'];
 
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type
         );
         yield ['GET', $type, $uri, 'fetchResources'];
 
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s/%s/relationships/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type,
             $this->faker()->numberBetween(),
-            $this->faker()->slug
+            $this->faker()->slug()
         );
         yield ['POST', $type, $uri, 'addRelatedResources'];
 
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type
         );
         yield ['POST', $type, $uri, 'createResource'];
 
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s/%s/relationships/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type,
             $this->faker()->numberBetween(),
-            $this->faker()->slug
+            $this->faker()->slug()
         );
         yield ['PATCH', $type, $uri, 'replaceRelatedResources'];
 
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type,
             $this->faker()->numberBetween()
         );
         yield ['PATCH', $type, $uri, 'patchResource'];
 
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s/%s/relationships/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type,
             $this->faker()->numberBetween(),
-            $this->faker()->slug
+            $this->faker()->slug()
         );
         yield ['DELETE', $type, $uri, 'removeRelatedResources'];
 
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type,
             $this->faker()->numberBetween()
         );
@@ -154,10 +154,10 @@ class JsonApiServerTest extends TestCase
 
     public function testUnknownType(): void
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type,
             $this->faker()->numberBetween()
         );
@@ -168,25 +168,25 @@ class JsonApiServerTest extends TestCase
 
     public function testInvalidContentType(): void
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $uri = sprintf(
             'http://%s/%s/%s',
-            $this->faker()->domainName,
+            $this->faker()->domainName(),
             $type,
             $this->faker()->numberBetween()
         );
         $request = new Request('GET', new Uri($uri));
-        $request->headers()->set('Content-Type', $this->faker()->slug);
+        $request->headers()->set('Content-Type', $this->faker()->slug());
         $this->expectExceptionObject(new UnsupportedMediaTypeException($request->headers()->get('Content-Type')));
         $this->server->handleRequest($request);
     }
 
     public function testInvalidHttpMethod(): void
     {
-        $type = $this->faker()->slug;
+        $type = $this->faker()->slug();
         $this->server->addHandler($type, $this->requestHandler);
 
-        $method = $this->faker()->userName;
+        $method = $this->faker()->userName();
         $request = $this->createMock(Request::class);
 
         $headers = new KeyValueCollection(['Content-Type' => JsonApiInterface::CONTENT_TYPE]);
@@ -206,12 +206,12 @@ class JsonApiServerTest extends TestCase
     public function testCreateRequestBodyInvalidJson(): void
     {
         $this->expectException(BadRequestException::class);
-        $this->server->createRequestBody($this->faker()->text);
+        $this->server->createRequestBody($this->faker()->text());
     }
 
     public function testCreateRequestBody(): void
     {
-        $data = [$this->faker()->text];
+        $data = [$this->faker()->text()];
         $jsonData = json_encode($data);
         $document = $this->createMock(DocumentInterface::class);
         $this->deserializer->expects(self::once())->method('deserializeDocument')->with($data)->willReturn($document);
@@ -241,7 +241,7 @@ class JsonApiServerTest extends TestCase
     public function testCreateResponseBody(): void
     {
         $response = $this->createMock(ResponseInterface::class);
-        $data = [$this->faker()->text];
+        $data = [$this->faker()->text()];
 
         $document = $this->createMock(DocumentInterface::class);
         $response->method('document')->willReturn($document);
@@ -253,7 +253,7 @@ class JsonApiServerTest extends TestCase
     public function testHandleException(): void
     {
         $throwable = $this->createMock(Throwable::class);
-        $debug = $this->faker()->boolean;
+        $debug = $this->faker()->boolean();
         $apiError = Error::createFrom($throwable, $debug);
 
         $document = new Document();

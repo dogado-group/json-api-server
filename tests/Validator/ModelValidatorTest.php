@@ -37,7 +37,7 @@ class ModelValidatorTest extends TestCase
         $validatorBuilder = new ValidatorBuilder();
         $validator = $validatorBuilder->enableAnnotationMapping()->getValidator();
 
-        $customPath = '/' . $this->faker()->word . '/' . $this->faker()->word;
+        $customPath = '/' . $this->faker()->word() . '/' . $this->faker()->word();
         $jsonApiValidator = new ModelValidator($validator);
         try {
             $jsonApiValidator->validate($model, null, null, $customPath);
