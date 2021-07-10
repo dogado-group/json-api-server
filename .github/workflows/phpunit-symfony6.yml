@@ -31,7 +31,7 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install dependencies
-        run: composer update --with symfony/validator:6.0.x-dev
+        run: composer require symfony/validator:6.0.x-dev && composer update
 
       - name: Execute tests
         run: vendor/bin/phpunit -v
