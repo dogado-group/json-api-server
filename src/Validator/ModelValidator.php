@@ -16,26 +16,28 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ModelValidator
 {
-    protected ValidatorInterface $validator;
     protected ViolationConverterInterface $violationConverter;
 
     public function __construct(
-        ValidatorInterface $validator,
+        protected ValidatorInterface $validator,
         ViolationConverterInterface $violationConverter = null
     ) {
-        $this->validator = $validator;
         $this->violationConverter = $violationConverter ?? new ViolationConverter();
     }
 
     /**
      * @param Constraint|Constraint[]|null $constraints The constraint(s) to validate against
-     * @param string|GroupSequence|(string|GroupSequence)[]|null $groups
+     * @param string|GroupSequence|string[]|GroupSequence[]|null $groups
      * @param string|null $documentPath The path to the resource within the JSON API document
      * @throws ValidationException
      * @throws ReflectionException
      */
-    public function validate(object $model, $constraints = null, $groups = null, string $documentPath = null): void
-    {
+    public function validate(
+        object $model,
+        mixed $constraints = null,
+        mixed $groups = null,
+        string $documentPath = null
+    ): void {
         $documentPath ??= '/data';
         /** @var ConstraintViolationListInterface|ConstraintViolationInterface[] $violationList */
         $violationList = $this->validator->validate($model, $constraints, $groups);

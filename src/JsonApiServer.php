@@ -51,7 +51,6 @@ class JsonApiServer
     }
 
     /**
-     * @return RequestHandlerInterface
      * @throws UnsupportedTypeException
      */
     private function getHandler(string $type): RequestHandlerInterface
