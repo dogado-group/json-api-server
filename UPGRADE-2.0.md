@@ -4,7 +4,7 @@
 
 In `v2.0.0` the support for JSON API model definitions via Doctrine annotations has been removed and moved to native
 php 8 attributes. The annotation classes have been moved from the namespace `Dogado\JsonApi\Annotations` to
-`Dogado\JsonApi\Attribute`. The attributes are basically the same. The only change is that the `value` attribute
+`Dogado\JsonApi\Attribute`. The attributes are basically the same. The only change is that the `value` property
 in the `Type` and `Attribute` classes has been renamed to `name`.
 
 Your models have to be changed like this:
