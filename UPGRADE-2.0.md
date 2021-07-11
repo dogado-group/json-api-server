@@ -106,12 +106,14 @@ class User
 
     #[
         Attribute,
+        Assert\NotBlank,
         Assert\Length(min: 3, max: 32)
     ]
     private ?string $name = 'John Doe';
 
     #[
         Attribute,
+        Assert\NotBlank,
         Assert\Email
     ]
     private ?string $email = null;
