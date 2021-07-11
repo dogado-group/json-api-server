@@ -1,4 +1,4 @@
-name: phpunit
+name: phpunit-symfony6
 
 on: [push, pull_request]
 
@@ -12,9 +12,8 @@ jobs:
           - ubuntu-latest
         php:
           - 8.0
-        dependency-version: [prefer-lowest, prefer-stable]
 
-    name: php${{ matrix.php }} - ${{ matrix.dependency-version }}
+    name: php${{ matrix.php }} - symfony 6
 
     steps:
       - name: Checkout code
@@ -32,14 +31,7 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install dependencies
-        run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+        run: composer require symfony/validator:6.0.x-dev && composer update
 
       - name: Execute tests
-        run: vendor/bin/phpunit -v --coverage-text --coverage-clover build/logs/clover.xml
-
-      - name: Upload coverage results to Coveralls
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          composer global require php-coveralls/php-coveralls
-          php-coveralls --coverage_clover=build/logs/clover.xml -v
+        run: vendor/bin/phpunit -v

@@ -2,11 +2,13 @@
 
 namespace Dogado\JsonApi\Server\Tests\Validator;
 
+use Composer\InstalledVersions;
 use Dogado\JsonApi\Exception\JsonApiException;
 use Dogado\JsonApi\Model\Error\ErrorInterface;
 use Dogado\JsonApi\Server\Tests\Stubs\Validator\Model;
 use Dogado\JsonApi\Server\Tests\TestCase;
 use Dogado\JsonApi\Server\Validator\ModelValidator;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ValidatorBuilder;
 
 class ModelValidatorTest extends TestCase
@@ -14,8 +16,7 @@ class ModelValidatorTest extends TestCase
     public function testValidate(): void
     {
         $model = new Model();
-        $validatorBuilder = new ValidatorBuilder();
-        $validator = $validatorBuilder->enableAnnotationMapping()->getValidator();
+        $validator = $this->getValidator();
 
         $jsonApiValidator = new ModelValidator($validator);
         try {
@@ -34,8 +35,7 @@ class ModelValidatorTest extends TestCase
     public function testValidateWithCustomDocumentPath(): void
     {
         $model = new Model();
-        $validatorBuilder = new ValidatorBuilder();
-        $validator = $validatorBuilder->enableAnnotationMapping()->getValidator();
+        $validator = $this->getValidator();
 
         $customPath = '/' . $this->faker()->word() . '/' . $this->faker()->word();
         $jsonApiValidator = new ModelValidator($validator);
@@ -50,5 +50,14 @@ class ModelValidatorTest extends TestCase
                 $error->source()->get('pointer')
             );
         }
+    }
+
+    private function getValidator(): ValidatorInterface
+    {
+        if (6 <= InstalledVersions::getVersion('symfony/validator')) {
+            return (new ValidatorBuilder())->enableAnnotationMapping()->getValidator();
+        }
+
+        return (new ValidatorBuilder())->enableAnnotationMapping(true)->getValidator();
     }
 }
