@@ -1,6 +1,6 @@
 # Changelog
 
-## v2.0.0 - 2021-07-XX
+## v2.0.0 - 2021-07-11
 
 - drop php 7.4 support
 - drop primary `doctrine/annotations` support for model validation
