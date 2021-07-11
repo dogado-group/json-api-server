@@ -132,5 +132,5 @@ $validatorBuilder = new ValidatorBuilder();
 $validator = $validatorBuilder->enableAnnotationMapping()->getValidator();
 
 // NEW
-(new ValidatorBuilder())->enableAnnotationMapping()->addDefaultDoctrineAnnotationReader()->getValidator();
+$validator = $validatorBuilder->enableAnnotationMapping()->addDefaultDoctrineAnnotationReader()->getValidator();
 ```
