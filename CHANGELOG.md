@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.0 - 2021-10-04
+
+- require `dogado/json-api-common:^3.0`
+
+See [json-api-common changelog](https://github.com/dogado-group/json-api-common/blob/v3.0.0/CHANGELOG.md) for more details.
+
 ## v2.0.0 - 2021-07-11
 
 - drop php 7.4 support
