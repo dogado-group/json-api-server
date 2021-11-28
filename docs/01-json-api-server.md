@@ -45,8 +45,8 @@ use Dogado\JsonApi\Model\Request\Request;
 // create the server
 $jsonApi = new JsonApiServer(new Deserializer(), new Serializer());
 
-// add your request handlers to the registry of the json api server
-$jsonApi->addHandler('customResources', new YourCustomRequestHandler());
+// Add your request handlers to the registry of the json api server. You can either pass an instance or a callable.
+$jsonApi->addHandler('customResources', fn () => new YourCustomRequestHandler());
 
 // create the json api request
 $request = new Request(
