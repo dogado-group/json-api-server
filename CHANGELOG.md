@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.0 - 2021-11-XX
+
+- add ability to register request handlers as callable to instantiate them on demand to reduce memory load
+
 ## v3.0.0 - 2021-10-04
 
 - require `dogado/json-api-common:^3.0`

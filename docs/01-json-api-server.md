@@ -4,13 +4,13 @@
 
 `Dogado\JsonApi\Server\JsonApiServer`:
 
-| Method                                                      | Return Type            | Description                                                    |
-|-------------------------------------------------------------|------------------------|----------------------------------------------------------------|
-| addHandler(string $type, RequestHandlerInterface $handler)  | void                   | Adds a request handler                                         |
-| createRequestBody(?string $requestBody)                     | DocumentInterface/null | Creates a document from the given string                       |
-| handleRequest(RequestInterface $request)                    | ResponseInterface      | Handles a request to generate a response                       |
-| createResponseBody(ResponseInterface $response)             | string                 | Creates the (http) response body for a given json api response |
-| handleException(\Throwable $throwable, bool $debug = false) | ResponseInterface      | Creates a response for an exception                            |
+| Method                                                              | Return Type            | Description
+|---------------------------------------------------------------------|------------------------|----------------------------------------------------------------
+| addHandler(string $type, RequestHandlerInterface\|callable $handler) | void                   | Adds a request handler. Can be a callable to instantiate request handlers on demand to reduce memory load.
+| createRequestBody(?string $requestBody)                             | DocumentInterface/null | Creates a document from the given string
+| handleRequest(RequestInterface $request)                            | ResponseInterface      | Handles a request to generate a response
+| createResponseBody(ResponseInterface $response)                     | string                 | Creates the (http) response body for a given json api response
+| handleException(\Throwable $throwable, bool $debug = false)         | ResponseInterface      | Creates a response for an exception
 
 ## Table of contents
 

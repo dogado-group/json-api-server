@@ -1,4 +1,5 @@
 <?php
+
 namespace Dogado\JsonApi\Server\Tests;
 
 use Dogado\JsonApi\Exception\DocumentSerializerException;
@@ -21,6 +22,7 @@ use Dogado\JsonApi\Support\Collection\KeyValueCollection;
 use Generator;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\MockObject\MockObject;
+use RuntimeException;
 use Throwable;
 
 class JsonApiServerTest extends TestCase
@@ -34,7 +36,7 @@ class JsonApiServerTest extends TestCase
     /** @var ResponseDecorator|MockObject */
     protected $responseDecorator;
 
-    /** @var RequestHandlerInterface|MockObject */
+    /** @var RequestHandlerInterface|callable|MockObject */
     protected $requestHandler;
 
     protected JsonApiServer $server;
@@ -152,6 +154,29 @@ class JsonApiServerTest extends TestCase
         yield ['DELETE', $type, $uri, 'deleteResource'];
     }
 
+    public function testCallableHandlerAssociation(): void
+    {
+        $type = $this->faker()->slug();
+        $uri = sprintf(
+            'http://%s/%s/%s',
+            $this->faker()->domainName(),
+            $type,
+            $this->faker()->numberBetween()
+        );
+
+        $this->server->addHandler($type, fn () => $this->requestHandler);
+
+        $request = new Request('GET', new Uri($uri));
+        $response = $this->createMock(ResponseInterface::class);
+        $this->requestHandler->expects(self::exactly(2))->method('fetchResource')->with($request)
+            ->willReturn($response);
+
+        $this->responseDecorator->expects(self::exactly(2))->method('handle')->with($request, $response);
+        $this->assertEquals($response, $this->server->handleRequest($request));
+        // execute a second time to test caching behaviour
+        $this->assertEquals($response, $this->server->handleRequest($request));
+    }
+
     public function testUnknownType(): void
     {
         $type = $this->faker()->slug();
@@ -163,6 +188,23 @@ class JsonApiServerTest extends TestCase
         );
         $request = new Request('GET', new Uri($uri));
         $this->expectExceptionObject(new UnsupportedTypeException($type));
+        $this->server->handleRequest($request);
+    }
+
+    public function testInvalidCallableHandlerInitialization(): void
+    {
+        $type = $this->faker()->slug();
+        $uri = sprintf(
+            'http://%s/%s/%s',
+            $this->faker()->domainName(),
+            $type,
+            $this->faker()->numberBetween()
+        );
+        $request = new Request('GET', new Uri($uri));
+        $this->server->addHandler($type, fn () => $this->faker()->text());
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessageMatches('/Unable to initialize.*by given callable/');
         $this->server->handleRequest($request);
     }
 
