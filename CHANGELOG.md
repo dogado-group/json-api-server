@@ -1,6 +1,6 @@
 # Changelog
 
-## v3.1.0 - 2021-11-XX
+## v3.1.0 - 2021-11-29
 
 - add ability to register request handlers as callable to instantiate them on demand to reduce memory load
 
