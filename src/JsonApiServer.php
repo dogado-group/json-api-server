@@ -21,6 +21,7 @@ use Dogado\JsonApi\Serializer\DocumentSerializerInterface;
 use Dogado\JsonApi\Serializer\Serializer;
 use Dogado\JsonApi\Server\Decorator\ResponseDecorator;
 use Dogado\JsonApi\Server\RequestHandler\RequestHandlerInterface;
+use RuntimeException;
 use Throwable;
 
 class JsonApiServer
@@ -31,8 +32,11 @@ class JsonApiServer
     protected DocumentSerializerInterface $serializer;
     protected ResponseDecorator $responseDecorator;
 
+    /** @var RequestHandlerInterface[]|callable[] */
+    private array $handlers = [];
+
     /** @var RequestHandlerInterface[] */
-    protected array $handlers = [];
+    private array $handlerInstances = [];
 
     public function __construct(
         ?DocumentDeserializerInterface $deserializer = null,
@@ -44,7 +48,7 @@ class JsonApiServer
         $this->responseDecorator = $responseDecorator ?? new ResponseDecorator();
     }
 
-    public function addHandler(string $type, RequestHandlerInterface $handler): self
+    public function addHandler(string $type, RequestHandlerInterface|callable $handler): self
     {
         $this->handlers[$type] = $handler;
         return $this;
@@ -52,14 +56,30 @@ class JsonApiServer
 
     /**
      * @throws UnsupportedTypeException
+     * @throws RuntimeException
      */
     private function getHandler(string $type): RequestHandlerInterface
     {
+        if (array_key_exists($type, $this->handlerInstances)) {
+            return $this->handlerInstances[$type];
+        }
+
         if (!array_key_exists($type, $this->handlers)) {
             throw new UnsupportedTypeException($type);
         }
 
-        return $this->handlers[$type];
+        $handler = $this->handlers[$type];
+        if (is_callable($handler)) {
+            $handler = $handler();
+
+            if (!$handler instanceof RequestHandlerInterface) {
+                throw new RuntimeException(
+                    'Unable to initialize request handler for type "' . $type . '" by given callable.'
+                );
+            }
+        }
+
+        return ($this->handlerInstances[$type] = $handler);
     }
 
     /**
