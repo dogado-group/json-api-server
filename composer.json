@@ -12,7 +12,7 @@
     "php": "^8.0",
     "ext-json": "*",
     "dogado/json-api-common": "^3.0",
-    "symfony/validator": "^5.3.7"
+    "symfony/validator": "^5.3.7|^6.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",
