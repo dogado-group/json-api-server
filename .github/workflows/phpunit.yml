@@ -43,5 +43,5 @@ jobs:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          composer require php-coveralls/php-coveralls guzzlehttp/guzzle:^7.0
+          composer global require php-coveralls/php-coveralls guzzlehttp/guzzle:^7.0
           php-coveralls --coverage_clover=build/logs/clover.xml -v
