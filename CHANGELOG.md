@@ -1,6 +1,6 @@
 # Changelog
 
-## v3.1.1 - 2021-12-02
+## v3.2.0 - 2021-12-02
 
 - add support for Symfony 6
 
