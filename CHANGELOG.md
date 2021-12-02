@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.1 - 2021-12-02
+
+- add support for Symfony 6
+
 ## v3.1.0 - 2021-11-29
 
 - add ability to register request handlers as callable to instantiate them on demand to reduce memory load
